@@ -26,6 +26,13 @@ def get_stores_by_id(store_id):
 @app.post("/stores")
 def create_store():
     store_data = request.get_json()
+    if "name" not in store_data:
+        abort(400, message="Informe o nome da sua loja")
+
+    for store in stores.values():
+        if store["name"] == store_data["name"]:
+            abort(400, message="Loja já cadastrada.")
+
     store_id = uuid.uuid4().hex
     new_store = {**store_data, "id": store_id}
     stores[store_id] = new_store
@@ -46,6 +53,12 @@ def create_items():
         or "name" not in item_data
     ):
         abort(404, message="Body deve conter proce,store_id e name")
+    for item in items.values():
+        if (
+            item_data["name"] == item["name"]
+            and item_data["store_id"] == item["store_id"]
+        ):
+            abort(400, message="Item já existe")
 
     if item_data["store_id"] not in stores:
         abort(400, message="Loja não encontrada")
