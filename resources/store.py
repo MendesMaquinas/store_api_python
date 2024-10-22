@@ -1,22 +1,22 @@
 import uuid
 
-from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from db import stores
-from schemas import StoreSchema, StoreUpdateSchema
+from schemas import StoreSchema
 blp = Blueprint("stores", __name__, description="Operations on stores")
 
 
 @blp.route("/store/<string:store_id>")
 class Store(MethodView):
+    @blp.response(200, StoreSchema)
     def get(self, store_id):
         try:
             return stores[store_id]
         except KeyError:
             return abort(404, message="Store not found")
 
-    @blp.arguments(StoreUpdateSchema)
+    @blp.arguments(StoreSchema)
+    @blp.response(200, StoreSchema)
     def put(self, store_data, store_id):
         try:
             if store_id not in stores:
@@ -41,15 +41,14 @@ class Store(MethodView):
 
 
 @blp.route("/store")
+@blp.response(200, StoreSchema(many=True))
 class StoreList(MethodView):
     def get(self):
-        return {"stores": list(stores.values())}
+        return stores.values()
 
     @blp.arguments(StoreSchema)
+    @blp.response(201, StoreSchema)
     def post(self, store_data):
-        if "name" not in store_data:
-            abort(400, message="Informe o nome da sua loja")
-
         for store in stores.values():
             if store["name"] == store_data["name"]:
                 abort(400, message="Loja já cadastrada.")
