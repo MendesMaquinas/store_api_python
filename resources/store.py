@@ -3,57 +3,47 @@ import uuid
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from schemas import StoreSchema
-blp = Blueprint("stores", __name__, description="Operations on stores")
+from models import StoreModel
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+from db import db
 
+blp = Blueprint("stores", __name__, description="Operations on stores")
 
 @blp.route("/store/<string:store_id>")
 class Store(MethodView):
     @blp.response(200, StoreSchema)
     def get(self, store_id):
-        try:
-            return stores[store_id]
-        except KeyError:
-            return abort(404, message="Store not found")
+        store = StoreModel.query.get_or_404(store_id)
+        return store
 
     @blp.arguments(StoreSchema)
     @blp.response(200, StoreSchema)
     def put(self, store_data, store_id):
-        try:
-            if store_id not in stores:
-                abort(404, message="Registro nao encontrado.")
-
-            store = stores[store_id]
-            store |= store_data
-
-            return store
-        except KeyError:
-            abort(404, message="Loja não encontrado.")
+        store = StoreModel.query.get_or_404(store_id)
+        raise NotImplementedError("Edição ainda não implemetada")
 
     def delete(self, store_id):
-        try:
-            if store_id not in stores:
-                abort(404, message="Registro nao encontrado.")
-
-            del stores[store_id]
-            return {"message": "Success"}
-        except KeyError:
-            abort(404, message="Loja não encontrado.")
+        store = StoreModel.query.get_or_404(store_id)
+        db.session.delete(store)
+        db.session.commit()
+        return {"message": "Item Deleted"}
 
 
 @blp.route("/store")
-@blp.response(200, StoreSchema(many=True))
 class StoreList(MethodView):
+    @blp.response(200, StoreSchema(many=True))
     def get(self):
-        return stores.values()
+        return StoreModel.query.all()
 
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
     def post(self, store_data):
-        for store in stores.values():
-            if store["name"] == store_data["name"]:
-                abort(400, message="Loja já cadastrada.")
-
-        store_id = uuid.uuid4().hex
-        new_store = {**store_data, "id": store_id}
-        stores[store_id] = new_store
-        return new_store, 201
+        store = StoreModel(**store_data)
+        try:
+            db.session.add(store)
+            db.session.commit()
+        except IntegrityError:
+            abort(400, message="Loja com o nome informado já cadastrada.")
+        except SQLAlchemyError:
+            abort(500, message="Erro ao criar loja.")
+        return store
