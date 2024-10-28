@@ -7,7 +7,8 @@ from models import StoreModel
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from db import db
 
-blp = Blueprint("stores", __name__, description="Operations on stores")
+blp = Blueprint("stores", "stores", description="Operations on stores")
+
 
 @blp.route("/store/<string:store_id>")
 class Store(MethodView):

@@ -5,7 +5,7 @@ from models import ItemModel
 from db import db
 from sqlalchemy.exc import SQLAlchemyError
 
-blp = Blueprint("Items", __name__, description="Operations on items")
+blp = Blueprint("Items", "items", description="Operations on items")
 
 @blp.route("/item/<string:item_id>")
 class Item(MethodView):
