@@ -9,11 +9,10 @@ from schemas import TagSchema, TagItemSchema
 blp = Blueprint("Tags", "tags", description="Operations on tags")
 
 
-@blp.route("/store/<string:store_id>/tag")
+@blp.route("/store/<int:store_id>/tag")
 class TagInStore(MethodView):
     @blp.response(200, TagSchema(many=True))
     def get(self, store_id):
-        print("aaaaa")
         store = StoreModel.query.get_or_404(store_id)
         return store.tags.all()
 
@@ -30,7 +29,7 @@ class TagInStore(MethodView):
         except SQLAlchemyError as e:
             abort(500, message=str(e))
 
-    @blp.route("/item/<string:item_id>/tag/<string:tag_id>")
+    @blp.route("/item/<int:item_id>/tag/<int:tag_id>")
     class LinkTagsToItem(MethodView):
 
         @blp.response(201, TagSchema)
@@ -61,7 +60,7 @@ class TagInStore(MethodView):
 
             return {"message": "Item removido da tag", "item": item, "tag": tag}
 
-    @blp.route("/tag/<string:tag_id>")
+    @blp.route("/tag/<int:tag_id>")
     class Tag(MethodView):
         @blp.response(200, TagSchema)
         def get(self, tag_id):
@@ -71,7 +70,8 @@ class TagInStore(MethodView):
 
         @blp.response(202, description="Deleta a tag se não tiver um item relacionado.", example={"message": "Tag deletada"})
         @blp.alt_response(404, description="Tag não encontrada")
-        @blp.alt_response(400, description="Se a tag for associada a mais de um item. Nesse caso a tag não será deletada.")
+        @blp.alt_response(400, description="Se a tag for associada a mais de um item. Nesse caso a tag não será "
+                                           "deletada.")
         def delete(self, tag_id):
             tag = TagModel.query.get_or_404(tag_id)
 

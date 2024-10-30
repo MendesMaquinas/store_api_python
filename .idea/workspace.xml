@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7b5d393-2275-4aa0-8736-09321a649b91" name="Changes" comment="up tag crud">
-      <change afterPath="$PROJECT_DIR$/models/item_tags.py" afterDir="false" />
+    <list default="true" id="e7b5d393-2275-4aa0-8736-09321a649b91" name="Changes" comment="up">
+      <change afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/item.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/item.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/store.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/store.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/tag.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/tag.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/item.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/store.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/store.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/tag.py" beforeDir="false" afterPath="$PROJECT_DIR$/resources/tag.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas.py" afterDir="false" />
     </list>
@@ -195,12 +195,20 @@
       <option name="project" value="LOCAL" />
       <updated>1730118430511</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="up">
+      <option name="closed" value="true" />
+      <created>1730202488172</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1730202488173</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="up" />
     <MESSAGE value="up tag crud" />
-    <option name="LAST_COMMIT_MESSAGE" value="up tag crud" />
+    <MESSAGE value="up" />
+    <option name="LAST_COMMIT_MESSAGE" value="up" />
   </component>
 </project>
