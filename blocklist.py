@@ -1,0 +1,5 @@
+"""
+blocklist.py
+"""
+
+BLOCKLIST = set()
